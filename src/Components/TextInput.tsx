@@ -1,5 +1,5 @@
 import { IconButton, InputAdornment, TextField } from "@mui/material";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 // Props for the TextInput component
 const TextInput = (props: {
@@ -55,7 +55,7 @@ const TextInput = (props: {
                                 setIsDropdownOpen(!isDropdownOpen); // Toggle dropdown visibility
                             }}
                         >
-                            <KeyboardArrowDownIcon />
+                            <ArrowDropDownIcon />
                         </IconButton>
                     </InputAdornment>
                 ),
