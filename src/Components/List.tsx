@@ -31,7 +31,7 @@ const ListItems = (props: ListItemsProps) => {
                 overflow: 'auto', // Enables scroll if list overflows
                 border: '1px solid #e0e0e0',
                 borderRadius: 1,
-                boxShadow: '0px 5px 5px -3px rgba(0, 0, 0, 0.2)',
+                boxShadow: '0px 3px 14px 2px rgba(0, 0, 0, 0.12)',
                 backgroundColor: 'white',
                 zIndex: 1000 // Ensures it's on top of other components
             }}
