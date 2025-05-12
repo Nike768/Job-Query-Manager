@@ -1,4 +1,6 @@
 import { Box, ListItem, Radio, Typography, List, Divider } from "@mui/material";
+import Dots from "./DotSeparator";
+import { colors } from "../color";
 
 // Interface for each job query item
 interface JobQuery {
@@ -20,27 +22,26 @@ interface ListItemsProps {
 
 const ListItems = (props: ListItemsProps) => {
     const { filteredQueries, handleRadioChange, selectedQueryId } = props;
+    const { darkGray, mediumGray, lightGray, transluscentBlack } = colors;
 
     return (
         <Box
-            sx={{
-                position: 'relative',
-                width: '100%',
-                mt: 0.5,
-                maxHeight: 472, // Limits dropdown height for scroll
-                overflow: 'auto', // Enables scroll if list overflows
-                border: '1px solid #e0e0e0',
-                borderRadius: 1,
-                boxShadow: '0px 3px 14px 2px rgba(0, 0, 0, 0.12)',
-                backgroundColor: 'white',
-                zIndex: 1000 // Ensures it's on top of other components
-            }}
+            position='relative'
+            marginTop="4px"
+            height="476px"
+            overflow="auto"
+            border={`1px solid ${lightGray}`}
+            borderRadius="4px"
+            boxShadow={`0px 3px 4px 2px ${transluscentBlack}`}
+            bgcolor="white"
+            width="100%"
+            zIndex={1000}
         >
-            <List sx={{ p: 0 }}>
+            <List style={{ padding: "0px" }}>
                 {/* If no results match the search query */}
                 {filteredQueries.length === 0 && (
-                    <ListItem sx={{ py: 2, justifyContent: 'center' }}>
-                        <Typography fontFamily={"inherit"} variant="body2" color="text.secondary">
+                    <ListItem>
+                        <Typography fontFamily={"inherit"} justifyContent="center" variant="body2" color="text.secondary">
                             No results found.
                         </Typography>
                     </ListItem>
@@ -51,44 +52,44 @@ const ListItems = (props: ListItemsProps) => {
                     <Box key={query.id}>
                         <ListItem
                             sx={{
-                                px: 2,
+                                px: "16px",
                                 py: "3px",
-                                '&:hover': { backgroundColor: '#f5f5f5' },
                                 cursor: 'pointer'
                             }}
-                            onClick={() => handleRadioChange(query.id, query.title)} // Set selected on click
+
+                            onClick={() => handleRadioChange(query.id, query.title)}
                         >
                             {/* Radio button to indicate selected query */}
                             <Radio
                                 checked={selectedQueryId === query.id}
                                 onChange={() => handleRadioChange(query.id, query.title)}
-                                sx={{ p: 0.5, mr: 1.5 }}
                             />
-                            <Box sx={{ width: '100%' }}>
-                                {/* Company, location, and openings info */}
+                            <Box width="100%" marginLeft="8px" >
                                 <Typography
                                     variant="caption"
-                                    color="#424242"
-                                    sx={{ fontWeight: 500, fontFamily: "inherit" }}
+                                    color={darkGray}
+                                    fontWeight="500"
+                                    fontFamily="inherit"
                                 >
-                                    {query.company} <span style={{ color: "#BDBDBD", width: "4px", height: "4px" }}>•</span> {query.location} <span style={{ color: "#BDBDBD", width: "4px", height: "4px" }}>•</span> {query.openings} Openings
+                                    {query.company} <Dots /> {query.location} <Dots /> {query.openings} Openings
                                 </Typography>
-
-                                {/* Job title */}
                                 <Typography
                                     variant="body2"
-                                    sx={{ fontWeight: 600, fontFamily: "inherit" }}
+                                    fontWeight="600"
+                                    fontFamily="inherit"
                                 >
                                     {query.title}
                                 </Typography>
-
-                                {/* Edit date and editor */}
                                 <Typography
                                     variant="caption"
-                                    color="#747474"
-                                    sx={{ display: 'block', pt: 0.5, pb: 0.5, fontWeight: 400, fontFamily: "inherit" }}
+                                    color={mediumGray}
+                                    display="block"
+                                    paddingTop="4px"
+                                    paddingBottom="4px"
+                                    fontWeight="400"
+                                    fontFamily="inherit"
                                 >
-                                    Edited On: {query.editDate} <span style={{ color: "#BDBDBD", width: "4px", height: "4px" }}>•</span> Edited By: {query.editedBy}
+                                    Edited On: {query.editDate} <Dots /> Edited By: {query.editedBy}
                                 </Typography>
                             </Box>
                         </ListItem>

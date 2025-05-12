@@ -7,10 +7,11 @@ import {
   ClickAwayListener,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import ListItems from "../Components/List";
-import ButtonComponent from "../Components/Button";
-import TextInput from "../Components/TextInput";
-import SnackBarComponent from "../Components/SnackBar";
+import ListItems from "../Common/Components/List";
+import ButtonComponent from "../Common/Components/Button";
+import TextInput from "../Common/Components/TextInput";
+import SnackBarComponent from "../Common/Components/SnackBar";
+import { colors } from '../Common/color';
 
 // Type definition for each job query item
 interface JobQuery {
@@ -23,10 +24,9 @@ interface JobQuery {
   editedBy: string;
 }
 
-// Props expected by MoveToJob component
 interface MoveToJobQueryDialogProps {
-  open: boolean;      // Controls whether the drawer is open
-  onClose: () => void; // Function to close the drawer
+  open: boolean; // It controls the visibility of the Drawer
+  onClose: () => void; // Callback function to be called to close the Drawer
 }
 
 // Static job query data
@@ -87,22 +87,27 @@ const jobQueries: JobQuery[] = [
   },
 ];
 
-const MoveToJob = ({ open, onClose }: MoveToJobQueryDialogProps) => {
+const MoveToJob = (props: MoveToJobQueryDialogProps) => {
+  const { open, onClose } = props;
   // State to keep track of the selected job query ID
   const [selectedQueryId, setSelectedQueryId] = useState<string>("");
 
   // State to store the search input value
   const [searchQuery, setSearchQuery] = useState<string>("");
 
-  // Toggle to control dropdown visibility
+  // State to control the visibility of the dropdown list
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
 
+  // State to control the visibility of the Snackbar notification
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
-  // Filtered list of job queries based on user input
+  // State to store the filtered job queries based on the search input
   const [filteredQueries, setFilteredQueries] = useState<JobQuery[]>(jobQueries);
 
-  // Effect to filter job queries whenever search input changes
+  // Colors for the component used from the common colors file
+  const { darkGray, lightGray } = colors;
+
+  // This useEffect is used to filter job queries whenever search input changes
   useEffect(() => {
     if (searchQuery) {
       const filtered = jobQueries.filter(query =>
@@ -110,56 +115,42 @@ const MoveToJob = ({ open, onClose }: MoveToJobQueryDialogProps) => {
       );
       setFilteredQueries(filtered);
     } else {
-      setFilteredQueries(jobQueries); // Reset to full list when input is cleared
+      setFilteredQueries(jobQueries);
     }
   }, [searchQuery]);
 
-  // Handles selection of a job query from the dropdown
+  // This function is Handling the selection of a job query from the dropdown
   const handleRadioChange = (id: string, title: string) => {
     setSelectedQueryId(id);
     setSearchQuery(title);
-    setIsDropdownOpen(false); // Close dropdown on selection
+    setIsDropdownOpen(false); 
   };
 
-  // Handles typing in the input field
+  // This function is used to handle changes in the search input field
   const handleInputChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setSearchQuery(event.target.value);
-
-    // If input is cleared, reset selection
     event.target.value === "" && setSelectedQueryId("");
-
-    // Show dropdown while typing
     setIsDropdownOpen(true);
   }
 
-  // Closes the dropdown when clicking outside
+  // This function is used to handle clicks outside the dropdown to close it
   const handleClickAway = () => {
     setIsDropdownOpen(false);
   };
 
-  // Function to handle the action of adding candidates to a job query
+  // This function is used to handle the addition of candidates to the selected job query
   const handleAddCandidates = () => {
-    // Show the success snackbar using Material UI Snackbar
     setSnackbarOpen(true);
-
-    // Clear the selected job query ID (reset selection)
     setSelectedQueryId("");
-
-    // Clear the search input field
     setSearchQuery("");
-
-    // Close the MoveToJob drawer/dialog
     onClose();
   };
 
-  // Function to handle closing the Snackbar notification
+  // This function is used to close the Snackbar notification
   const handleSnackbarClose = (reason?: string) => {
-    // Prevent closing the Snackbar if the user clicks away (click outside)
     if (reason === 'clickaway') {
       return;
     }
-
-    // Close the Snackbar normally
     setSnackbarOpen(false);
   };
 
@@ -172,39 +163,31 @@ const MoveToJob = ({ open, onClose }: MoveToJobQueryDialogProps) => {
         sx={{
           '& .MuiDrawer-paper': {
             width: { xs: '100%', sm: 500 },
-            boxSizing: 'border-box',
             display: 'flex',
-            flexDirection: 'column',
-            height: '100%',
           },
         }}
       >
         {/* Header section with title and close button */}
-        <Box sx={{ paddingLeft: '24px', paddingRight: '24px', paddingTop: '24px' }}>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <Typography fontFamily={"inherit"} variant="h6" fontWeight="600">
+        <Box padding="24px 24px 0px 24px">
+          <Box display="flex" justifyContent="space-between" alignItems="center">
+            <Typography fontFamily="inherit" variant="h6" fontWeight="600">
               Move to Job Query
             </Typography>
-            <IconButton onClick={onClose} size="small" sx={{
-              '&:focus': {
-                outline: 'none', // Removed black outline border on clicking
-              },
-            }}>
+            <IconButton onClick={onClose} size="small">
               <CloseIcon fontSize="small" />
             </IconButton>
           </Box>
 
           {/* Instructional text */}
-          <Typography variant="body2" color="#424242" sx={{ mt: 2, fontWeight: 500, fontFamily: "inherit" }}>
+          <Typography variant="body2" color={darkGray} marginTop="16px" fontWeight="500" fontFamily="inherit">
             Select Job Query to move candidates to the shortlist tab
           </Typography>
         </Box>
 
         {/* Main content section with search + dropdown */}
-        <Box sx={{ paddingLeft: '24px', paddingRight: '24px', flex: 1 }}>
+        <Box paddingLeft="24px" paddingRight="24px" flex={1}>
           <ClickAwayListener onClickAway={handleClickAway}>
-            <Box sx={{ marginTop: '15px' }}>
-              {/* Reusable TextInput component */}
+            <Box marginTop="15px">
               <TextInput
                 searchQuery={searchQuery}
                 isDropdownOpen={isDropdownOpen}
@@ -212,8 +195,6 @@ const MoveToJob = ({ open, onClose }: MoveToJobQueryDialogProps) => {
                 labelText="Job Query Title"
                 handleInputChange={handleInputChange}
               />
-
-              {/* Conditionally rendered dropdown list */}
               {isDropdownOpen && (
                 <ListItems
                   filteredQueries={filteredQueries}
@@ -227,18 +208,15 @@ const MoveToJob = ({ open, onClose }: MoveToJobQueryDialogProps) => {
 
         {/* Footer section with Shortlist text button */}
         <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'flex-end',
-            p: 3,
-            borderTop: '1px solid #e0e0e0',
-            mt: 'auto',
-          }}
+          display="flex"
+          justifyContent="flex-end"
+          padding="24px"
+          borderTop={`1px solid ${lightGray}`}
+          marginTop='auto'
         >
-          <ButtonComponent handleAddCandidates={handleAddCandidates} selectedQueryId={selectedQueryId} btnText={"ADD CANDIDATES TO SHORTLIST"} />
+          <ButtonComponent onClickhandler={handleAddCandidates} disabled={!selectedQueryId} variant="contained" btnText={"ADD CANDIDATES TO SHORTLIST"} />
         </Box>
       </Drawer>
-      {/* Render the custom Snackbar component to show feedback to the user */}
       <SnackBarComponent snackbarOpen={snackbarOpen} handleSnackbarClose={handleSnackbarClose} snackbarText="Candidates successfully added to shortlist" />
     </>
   );

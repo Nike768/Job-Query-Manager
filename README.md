@@ -37,16 +37,30 @@ yarn dev
 
 ```
 src/
-├── Components/         # Reusable UI components
-│ ├── Button.tsx
-│ ├── List.tsx
-│ ├── SnackBar.tsx
-│ └── TextInput.tsx
+├── assets/                  # Static assets (images, SVGs, etc.)
+│   ├── job.svg
+│   └── react.svg
+│
+├── Common/
+│   ├── color.ts             # Centralized color definitions
+│   └── Components/          # Reusable UI components
+│       ├── Button.tsx
+│       ├── DotSeparator.tsx
+│       ├── LabelWithAsterisk.tsx
+│       ├── List.tsx
+│       ├── SnackBar.tsx
+│       └── TextInput.tsx
+│
 ├── JobQuery/
-│ └── MoveToJob.tsx     # Job Query Drawer View 
-├── MainContainer/      # Job Query Container
-│ └── Index.tsx         
-└── main.tsx / App.tsx  # Application entry point
+│   └── MoveToJob.tsx        # Job Query Drawer View
+│
+├── MainContainer/
+│   └── Index.tsx            # Job Query Container
+│
+├── App.tsx                  # Main app component
+└── main.tsx                 # Application entry point
+
+
 ```
 
 ## 🚀 Features
