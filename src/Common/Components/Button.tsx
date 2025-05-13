@@ -1,5 +1,6 @@
 import { Button } from "@mui/material";
 import type { JSX } from "react";
+import React from "react";
 
 interface ButtonProps {
     btnText: string; // Text to be displayed on the button
@@ -23,4 +24,4 @@ const ButtonComponent = (props: ButtonProps) => {
     );
 };
 
-export default ButtonComponent;
+export default React.memo(ButtonComponent);

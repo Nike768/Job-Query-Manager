@@ -1,5 +1,6 @@
 import {TextField, type FilledInputProps, type InputProps, type OutlinedInputProps } from "@mui/material";
 import LabelWithAsterisk from "./LabelWithAsterisk";
+import React from "react";
 
 const TextInput = (props: {
     searchQuery: string; // Current input value
@@ -32,4 +33,4 @@ const TextInput = (props: {
     );
 };
 
-export default TextInput;
+export default React.memo(TextInput);

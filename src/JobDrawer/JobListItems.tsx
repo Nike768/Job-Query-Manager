@@ -1,6 +1,7 @@
 import { Box, ListItem, Radio, Typography, List, Divider } from "@mui/material";
 import Dots from "../Common/Components/DotSeparator";
 import { colors } from "../Common/color";
+import React from "react";
 
 // Interface for each job query item
 interface JobQuery {
@@ -39,17 +40,17 @@ const JobListItems = (props: ListItemsProps) => {
         >
             <List disablePadding={true} >
                 {/* Render each filtered Job item */}
-                {ListItems.map((query, index: number) => (
-                    <Box key={query.id}>
+                {ListItems.map((item, index: number) => (
+                    <Box key={item.id}>
                         <ListItem
                             sx={{px: "1rem", py: "0.1875rem", cursor: 'pointer'}}
-                            onClick={() => handleRadioChange(query.id, query.title)}
+                            onClick={() => handleRadioChange(item.id, item.title)}
                         >
-                            {/* Radio button to indicate selected query */}
+                            {/* Radio button to indicate selected item */}
                             <Box marginBottom="1.625rem">
                                 <Radio
-                                    checked={selectedItem === query.id}
-                                    onChange={() => handleRadioChange(query.id, query.title)}
+                                    checked={selectedItem === item.id}
+                                    onChange={() => handleRadioChange(item.id, item.title)}
                                     size="small"
                                 />
                             </Box>
@@ -60,14 +61,14 @@ const JobListItems = (props: ListItemsProps) => {
                                     fontWeight="500"
                                     fontFamily="inherit"
                                 >
-                                    {query.company} <Dots dotsColor="grey.400" /> {query.location} <Dots dotsColor="grey.400" /> {query.openings} Openings
+                                    {item.company} <Dots dotsColor="grey.400" /> {item.location} <Dots dotsColor="grey.400" /> {item.openings} Openings
                                 </Typography>
                                 <Typography
                                     variant="body2"
                                     fontWeight="600"
                                     fontFamily="inherit"
                                 >
-                                    {query.title}
+                                    {item.title}
                                 </Typography>
                                 <Typography
                                     variant="caption"
@@ -78,7 +79,7 @@ const JobListItems = (props: ListItemsProps) => {
                                     fontWeight="400"
                                     fontFamily="inherit"
                                 >
-                                    Edited On: {query.editDate} <Dots dotsColor="grey.400" /> Edited By: {query.editedBy}
+                                    Edited On: {item.editDate} <Dots dotsColor="grey.400" /> Edited By: {item.editedBy}
                                 </Typography>
                             </Box>
                         </ListItem>
@@ -92,4 +93,4 @@ const JobListItems = (props: ListItemsProps) => {
     );
 };
 
-export default JobListItems;
+export default React.memo(JobListItems);

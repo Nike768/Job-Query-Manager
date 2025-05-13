@@ -1,4 +1,5 @@
 import { Box } from "@mui/material";
+import React from "react";
 
 // Dots component is used to show the dots between the text
 const Dots = (props : {dotsColor: string}) => {
@@ -16,4 +17,4 @@ const Dots = (props : {dotsColor: string}) => {
         />
     );
 };
-export default Dots
+export default React.memo(Dots);

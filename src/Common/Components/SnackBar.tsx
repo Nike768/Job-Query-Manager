@@ -1,4 +1,5 @@
 import { Alert, Snackbar } from "@mui/material";
+import React from "react";
 
 // Snackbar component used to show Success or failure messages at the top-center of the screen
 const SnackBarComponent = (props: {
@@ -26,4 +27,4 @@ const SnackBarComponent = (props: {
     );
 };
 
-export default SnackBarComponent;
+export default React.memo(SnackBarComponent);

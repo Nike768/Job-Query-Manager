@@ -1,4 +1,4 @@
-import { useEffect, useState, type ChangeEvent } from "react";
+import { useCallback, useMemo, useState, type ChangeEvent } from "react";
 import {
   Drawer,
   Box,
@@ -30,54 +30,63 @@ const JobDrawer = (props: MoveToJobQueryDialogProps) => {
 
   const [snackbarOpen, setSnackbarOpen] = useState(false); //State to control the visibility of the Snackbar notification
 
-  const [filteredQueries, setFilteredQueries] = useState(jobQueries); // State to store the filtered jobs based on the search input
 
   const { darkGray, lightGray, mediumGray } = colors; // Color variables for styling
 
   // This function is Handling the selection of a job query from the dropdown
-  const handleRadioChange = (id: string, title: string) => {
+  const handleRadioChange = useCallback((id: string, title: string) => {
     setSelectedQueryId(id);
     setSearchQuery(title);
     setIsDropdownOpen(false);
-  };
+  }, []);
 
   // This function is used to handle changes in the search input field
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = useCallback((event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { value } = event.target;
     setSearchQuery(value);
     if (!value) setSelectedQueryId("");
     setIsDropdownOpen(true);
-  }
+  }, []);
 
   // This function is used to handle clicks outside the dropdown to close it
-  const handleClickAway = () => {
+  const handleClickAway = useCallback(() => {
     setIsDropdownOpen(false);
-  };
+  }, []);
 
   // This function is used to handle the addition of candidates to the selected job query
-  const handleAddCandidates = () => {
+  const handleAddCandidates = useCallback(() => {
     setSnackbarOpen(true);
     setSelectedQueryId("");
     setSearchQuery("");
     onClose();
-  };
+  }, []);
 
   // This function is used to close the Snackbar notification
-  const handleSnackbarClose = (reason?: string) => {
+  const handleSnackbarClose = useCallback((reason?: string) => {
     if (reason !== "clickaway") setSnackbarOpen(false);
-  };
+  }, []);
 
-  // Filter the jobs based on search input
-  useEffect(() => {
+  // Memoized filtered queries based on search input. This will only re-run when searchQuery changes
+  const filteredQueries = useMemo(() => {
     if (searchQuery) {
-      const filtered = jobQueries.filter(query =>
+      return jobQueries.filter(query =>
         query.title.toLowerCase().includes(searchQuery.toLowerCase())
       );
-      setFilteredQueries(filtered);
-    } else {
-      setFilteredQueries(jobQueries);
     }
+    return jobQueries;
   }, [searchQuery]);
+
+  const endAdornment = useMemo(() => (
+    <IconButton
+      size="small"
+      onClick={(e) => {
+        e.stopPropagation();
+        setIsDropdownOpen((prev) => !prev);
+      }}
+    >
+      <ArrowDropDownIcon />
+    </IconButton>
+  ), []);
 
   return (
     <>
@@ -85,11 +94,8 @@ const JobDrawer = (props: MoveToJobQueryDialogProps) => {
         anchor="right"
         open={open}
         onClose={onClose}
-        sx={{
-          '& .MuiDrawer-paper': {
-            width: { xs: '100%', sm: 500 },
-            display: 'flex',
-          },
+        PaperProps={{
+          style: { width: window.innerWidth < 600 ? "100%" : 500, display: "flex" },
         }}
       >
         {/* Header section with title and close button */}
@@ -108,7 +114,7 @@ const JobDrawer = (props: MoveToJobQueryDialogProps) => {
           </Typography>
         </Box>
 
-        {/* Main content section with search + dropdown */}
+        {/* Input field section in which you can search and dropdown is also there */}
         <Box paddingLeft="1.5rem" paddingRight="1.5rem" flex={1}>
           <ClickAwayListener onClickAway={handleClickAway}>
             <Box marginTop="0.9375rem">
@@ -118,19 +124,7 @@ const JobDrawer = (props: MoveToJobQueryDialogProps) => {
                 setIsDropdownOpen={setIsDropdownOpen}
                 labelText="Job Query Title"
                 handleInputChange={handleInputChange}
-                inputProps={{
-                  endAdornment: (
-                    <IconButton
-                      size="small"
-                      onClick={(e) => {
-                        e.stopPropagation(); // Prevent input click from being triggered again
-                        setIsDropdownOpen((prev) => !prev);
-                      }}
-                    >
-                      <ArrowDropDownIcon /> {/* Arrow icon to toggle dropdown */}
-                    </IconButton>
-                  ),
-                }}
+                inputProps={{endAdornment : endAdornment}}
               />
               {isDropdownOpen && (
                 filteredQueries.length === 0 ? (

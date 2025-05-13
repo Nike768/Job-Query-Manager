@@ -1,4 +1,5 @@
 import { Box } from '@mui/material';
+import React from 'react';
 
 // LabelWithAsterisk component is used to show the label(SomeText) with asterisk(*) to show that it is a required field.
 const LabelWithAsterisk = (props: {
@@ -23,4 +24,4 @@ const LabelWithAsterisk = (props: {
         </Box>
     );
 }
-export default LabelWithAsterisk;
+export default React.memo(LabelWithAsterisk);
