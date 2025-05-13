@@ -37,16 +37,12 @@ const JobListItems = (props: ListItemsProps) => {
             width="100%"
             zIndex={1000}
         >
-            <List style={{ padding: "0rem" }}>
+            <List disablePadding={true} >
                 {/* Render each filtered Job item */}
                 {ListItems.map((query, index: number) => (
                     <Box key={query.id}>
                         <ListItem
-                            sx={{
-                                px: "1rem",
-                                py: "0.1875rem",
-                                cursor: 'pointer'
-                            }}
+                            sx={{px: "1rem", py: "0.1875rem", cursor: 'pointer'}}
                             onClick={() => handleRadioChange(query.id, query.title)}
                         >
                             {/* Radio button to indicate selected query */}

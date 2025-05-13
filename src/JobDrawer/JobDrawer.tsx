@@ -93,7 +93,7 @@ const JobDrawer = (props: MoveToJobQueryDialogProps) => {
         }}
       >
         {/* Header section with title and close button */}
-        <Box padding="1.25rem 1.5rem 0">
+        <Box padding="1.25rem 1.5rem 0rem">
           <Box display="flex" justifyContent="space-between" alignItems="center">
             <Typography fontFamily="inherit" variant="h6" fontWeight="600" fontSize="large">
               Move to Job Query
