@@ -23,14 +23,9 @@ interface MoveToJobQueryDialogProps {
 const JobDrawer = (props: MoveToJobQueryDialogProps) => {
   const { open, onClose } = props;
   const [selectedQueryId, setSelectedQueryId] = useState<string>(""); // State to keep track of the selected job query ID
-
   const [searchQuery, setSearchQuery] = useState<string>(""); // State to store the search input value
-
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false); // State to control the visibility of the dropdown list
-
   const [snackbarOpen, setSnackbarOpen] = useState(false); //State to control the visibility of the Snackbar notification
-
-
   const { darkGray, lightGray, mediumGray } = colors; // Color variables for styling
 
   // This function is Handling the selection of a job query from the dropdown
