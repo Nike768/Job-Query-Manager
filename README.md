@@ -70,7 +70,7 @@ src/
 - Searchable and filterable job list
 - Highlighted selection with visual feedback
 - Material UI components for a clean and responsive UI
-- Reusable components for input, list rendering, and button control
+- Reusable components for input, Dots, Snackbar, button etc
 
 ## 🛠 Technologies Used
 
