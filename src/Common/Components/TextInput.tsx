@@ -1,5 +1,4 @@
-import { IconButton, InputAdornment, TextField } from "@mui/material";
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import {TextField, type FilledInputProps, type InputProps, type OutlinedInputProps } from "@mui/material";
 import LabelWithAsterisk from "./LabelWithAsterisk";
 
 const TextInput = (props: {
@@ -8,12 +7,13 @@ const TextInput = (props: {
     setIsDropdownOpen: Function; // State fucntion to toggle the dropdown visibility
     isDropdownOpen: boolean; // It will indicate the dropdown state whether it is open or closed
     labelText: string; // Text to be shown in the Label for the input field
+    inputProps: Partial<FilledInputProps> | Partial<OutlinedInputProps> | Partial<InputProps> | undefined; // Props to be passed to the input field
 }) => {
     const {
         searchQuery,
         handleInputChange,
         setIsDropdownOpen,
-        isDropdownOpen,
+        inputProps,
         labelText
     } = props;
 
@@ -27,21 +27,7 @@ const TextInput = (props: {
             onChange={(e) => handleInputChange(e)}
             onClick={() => setIsDropdownOpen(true)}
             size="medium"
-            InputProps={{
-                endAdornment: (
-                    <InputAdornment position="end">
-                        <IconButton
-                            size="small"
-                            onClick={(e) => {
-                                e.stopPropagation(); // Prevent input click from being triggered again
-                                setIsDropdownOpen(!isDropdownOpen);
-                            }}
-                        >
-                            <ArrowDropDownIcon /> {/*arrow icon to toggle dropdown */}
-                        </IconButton>
-                    </InputAdornment>
-                ),
-            }}
+            InputProps={inputProps}
         />
     );
 };

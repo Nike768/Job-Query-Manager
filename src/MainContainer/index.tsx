@@ -1,6 +1,6 @@
 import { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
-import MoveToJob from "../JobQuery/MoveToJob";
+import JobDrawer from "../JobDrawer/JobDrawer";
 import ButtonComponent from "../Common/Components/Button";
 
 const Index = () => {
@@ -21,7 +21,7 @@ const Index = () => {
           >
           </ButtonComponent>
         </div>
-        <MoveToJob open={isDialogOpen} onClose={() => setIsDialogOpen(false)} />
+        <JobDrawer open={isDialogOpen} onClose={() => setIsDialogOpen(false)} />
       </div>
     </div>
   );

@@ -4,7 +4,7 @@ import { createTheme } from '@mui/material/styles';
 import { ThemeProvider } from '@mui/material/styles';
 
 function App() {
-  // A global MUI theme is created to remove the default focus outline on inptuts, buttons and icon buttons
+  // A global MUI theme is created to remove the default focus outline on inputs, buttons and icon buttons
   const theme = createTheme({
     components: {
       MuiButton: {

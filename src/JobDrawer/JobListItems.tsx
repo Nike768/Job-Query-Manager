@@ -1,6 +1,6 @@
 import { Box, ListItem, Radio, Typography, List, Divider } from "@mui/material";
-import Dots from "./DotSeparator";
-import { colors } from "../color";
+import Dots from "../Common/Components/DotSeparator";
+import { colors } from "../Common/color";
 
 // Interface for each job query item
 interface JobQuery {
@@ -15,13 +15,14 @@ interface JobQuery {
 
 // Props expected by ListItems component
 interface ListItemsProps {
-    filteredQueries: JobQuery[]; // Filtered list of job queries to display
+    ListItems: JobQuery[]; // List of Items to be shown in the list
     handleRadioChange: Function; // Callback to handle radio button selection
-    selectedQueryId: string; // ID of the currently selected query
+    selectedItem: string; // Id of the currently selected item
+
 }
 
-const ListItems = (props: ListItemsProps) => {
-    const { filteredQueries, handleRadioChange, selectedQueryId } = props;
+const JobListItems = (props: ListItemsProps) => {
+    const { ListItems, handleRadioChange, selectedItem } = props;
     const { darkGray, mediumGray, lightGray, transluscentBlack } = colors;
 
     return (
@@ -39,7 +40,7 @@ const ListItems = (props: ListItemsProps) => {
         >
             <List style={{ padding: "0px" }}>
                 {/* If no results match the search query */}
-                {filteredQueries.length === 0 && (
+                {ListItems.length === 0 && (
                     <ListItem>
                         <Typography fontFamily={"inherit"} justifyContent="center" variant="body2" color="text.secondary">
                             No results found.
@@ -47,8 +48,8 @@ const ListItems = (props: ListItemsProps) => {
                     </ListItem>
                 )}
 
-                {/* Map and render each filtered job query item */}
-                {filteredQueries.map((query, index: number) => (
+                {/* Map and render each filtered query item */}
+                {ListItems.map((query, index: number) => (
                     <Box key={query.id}>
                         <ListItem
                             sx={{
@@ -56,14 +57,16 @@ const ListItems = (props: ListItemsProps) => {
                                 py: "3px",
                                 cursor: 'pointer'
                             }}
-
                             onClick={() => handleRadioChange(query.id, query.title)}
                         >
                             {/* Radio button to indicate selected query */}
-                            <Radio
-                                checked={selectedQueryId === query.id}
-                                onChange={() => handleRadioChange(query.id, query.title)}
-                            />
+                            <Box marginBottom="26px">
+                                <Radio
+                                    checked={selectedItem === query.id}
+                                    onChange={() => handleRadioChange(query.id, query.title)}
+                                    size="small"
+                                />
+                            </Box>
                             <Box width="100%" marginLeft="8px" >
                                 <Typography
                                     variant="caption"
@@ -95,7 +98,7 @@ const ListItems = (props: ListItemsProps) => {
                         </ListItem>
 
                         {/* Divider between list items, except after last item */}
-                        {index !== filteredQueries.length - 1 && <Divider />}
+                        {index !== ListItems.length - 1 && <Divider />}
                     </Box>
                 ))}
             </List>
@@ -103,4 +106,4 @@ const ListItems = (props: ListItemsProps) => {
     );
 };
 
-export default ListItems;
+export default JobListItems;

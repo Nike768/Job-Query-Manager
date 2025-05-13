@@ -47,12 +47,13 @@ src/
 │       ├── Button.tsx
 │       ├── DotSeparator.tsx
 │       ├── LabelWithAsterisk.tsx
-│       ├── List.tsx
 │       ├── SnackBar.tsx
 │       └── TextInput.tsx
 │
-├── JobQuery/
-│   └── MoveToJob.tsx        # Job Query Drawer View
+├── JobDrawer/
+│   ├── JobListItems.tsx     # Job Items List
+│   ├── JobQueries.ts        # Static Job Query data
+│   └── JobDrawer.tsx        # Job Query Drawer View
 │
 ├── MainContainer/
 │   └── Index.tsx            # Job Query Container
