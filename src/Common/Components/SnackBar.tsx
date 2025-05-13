@@ -1,12 +1,11 @@
 import { Alert, Snackbar } from "@mui/material";
 
-// Props:
-// snackbarOpen: It Controls the visibility of the snackbar
-// HandleSnackbarClose: Callback function will be called when snackbar is closed
-// snackbarText: Textto be displayed in the snackbar
-
-// Snackbar component used to show brief messages at the top-center of the screen
-const SnackBarComponent = (props: { snackbarOpen: boolean, handleSnackbarClose: Function, snackbarText: string }) => {
+// Snackbar component used to show Success or failure messages at the top-center of the screen
+const SnackBarComponent = (props: {
+    snackbarOpen: boolean, // It Controls the visibility of the snackbar
+    handleSnackbarClose: Function, // Callback function will be called when snackbar is closed
+    snackbarText: string // Text to be displayed in the snackbar
+}) => {
     const { snackbarOpen, handleSnackbarClose, snackbarText } = props;
 
     return (

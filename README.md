@@ -42,7 +42,7 @@ src/
 │   └── react.svg
 │
 ├── Common/
-│   ├── color.ts             # Centralized color definitions
+│   ├── color.ts             # Common Color file to use across the project
 │   └── Components/          # Reusable UI components
 │       ├── Button.tsx
 │       ├── DotSeparator.tsx

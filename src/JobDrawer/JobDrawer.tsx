@@ -1,4 +1,4 @@
-import { useState, type ChangeEvent } from "react";
+import { useEffect, useState, type ChangeEvent } from "react";
 import {
   Drawer,
   Box,
@@ -30,7 +30,9 @@ const JobDrawer = (props: MoveToJobQueryDialogProps) => {
 
   const [snackbarOpen, setSnackbarOpen] = useState(false); //State to control the visibility of the Snackbar notification
 
-  const { darkGray, lightGray } = colors; // Color variables for styling
+  const [filteredQueries, setFilteredQueries] = useState(jobQueries); // State to store the filtered jobs based on the search input
+
+  const { darkGray, lightGray, mediumGray } = colors; // Color variables for styling
 
   // This function is Handling the selection of a job query from the dropdown
   const handleRadioChange = (id: string, title: string) => {
@@ -65,6 +67,18 @@ const JobDrawer = (props: MoveToJobQueryDialogProps) => {
     if (reason !== "clickaway") setSnackbarOpen(false);
   };
 
+  // Filter the jobs based on search input
+  useEffect(() => {
+    if (searchQuery) {
+      const filtered = jobQueries.filter(query =>
+        query.title.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setFilteredQueries(filtered);
+    } else {
+      setFilteredQueries(jobQueries);
+    }
+  }, [searchQuery]);
+
   return (
     <>
       <Drawer
@@ -79,26 +93,25 @@ const JobDrawer = (props: MoveToJobQueryDialogProps) => {
         }}
       >
         {/* Header section with title and close button */}
-        <Box padding="24px 24px 0px">
+        <Box padding="1.25rem 1.5rem 0">
           <Box display="flex" justifyContent="space-between" alignItems="center">
-            <Typography fontFamily="inherit" variant="h6" fontWeight="600">
+            <Typography fontFamily="inherit" variant="h6" fontWeight="600" fontSize="large">
               Move to Job Query
             </Typography>
-            <IconButton onClick={onClose} size="small">
+            <IconButton edge="end" onClick={onClose}>
               <CloseIcon fontSize="small" />
             </IconButton>
           </Box>
 
-          {/* Instructional text */}
-          <Typography variant="body2" color={darkGray} marginTop="16px" fontWeight="500" fontFamily="inherit">
+          <Typography variant="body2" color={darkGray} marginTop="1rem" fontWeight="500" fontFamily="inherit">
             Select Job Query to move candidates to the shortlist tab
           </Typography>
         </Box>
 
         {/* Main content section with search + dropdown */}
-        <Box paddingLeft="24px" paddingRight="24px" flex={1}>
+        <Box paddingLeft="1.5rem" paddingRight="1.5rem" flex={1}>
           <ClickAwayListener onClickAway={handleClickAway}>
-            <Box marginTop="15px">
+            <Box marginTop="0.9375rem">
               <TextInput
                 searchQuery={searchQuery}
                 isDropdownOpen={isDropdownOpen}
@@ -111,7 +124,7 @@ const JobDrawer = (props: MoveToJobQueryDialogProps) => {
                       size="small"
                       onClick={(e) => {
                         e.stopPropagation(); // Prevent input click from being triggered again
-                        setIsDropdownOpen((prev) => !prev); // Toggle dropdown visibility
+                        setIsDropdownOpen((prev) => !prev);
                       }}
                     >
                       <ArrowDropDownIcon /> {/* Arrow icon to toggle dropdown */}
@@ -120,12 +133,19 @@ const JobDrawer = (props: MoveToJobQueryDialogProps) => {
                 }}
               />
               {isDropdownOpen && (
+                filteredQueries.length === 0 ? (
+                  <Box paddingTop="2rem">
+                    <Typography fontFamily="inherit" justifyContent="center" display="flex" variant="body2" color={mediumGray}>
+                      No results found
+                    </Typography>
+                  </Box>
+                ) : (
                 <JobListItems
-                  ListItems={jobQueries}
+                  ListItems={filteredQueries}
                   selectedItem={selectedQueryId}
                   handleRadioChange={handleRadioChange}
                 />
-              )}
+              ))}
             </Box>
           </ClickAwayListener>
         </Box>
@@ -134,8 +154,8 @@ const JobDrawer = (props: MoveToJobQueryDialogProps) => {
         <Box
           display="flex"
           justifyContent="flex-end"
-          padding="24px"
-          borderTop={`1px solid ${lightGray}`}
+          padding="1.6rem"
+          borderTop={`0.0625rem solid ${lightGray}`}
           marginTop='auto'
         >
           <ButtonComponent onClickhandler={handleAddCandidates} disabled={!selectedQueryId} variant="contained" btnText={"ADD CANDIDATES TO SHORTLIST"} />

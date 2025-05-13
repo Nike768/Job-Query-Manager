@@ -1,7 +1,11 @@
 import { Box } from '@mui/material';
 
-const LabelWithAsterisk = (props: { labelText: string }) => {
-    const { labelText } = props;
+// LabelWithAsterisk component is used to show the label(SomeText) with asterisk(*) to show that it is a required field.
+const LabelWithAsterisk = (props: {
+    labelText: string, // Text to be shown in the Label
+    asteriskColor: string // Color of the asterisk(*)
+}) => {
+    const { labelText, asteriskColor } = props;
     return (
         <Box
             component="span"
@@ -11,8 +15,8 @@ const LabelWithAsterisk = (props: { labelText: string }) => {
             {labelText}
             <Box
                 component="span"
-                color="red"
-                marginLeft="4px"
+                color={asteriskColor}
+                marginLeft="0.25rem"
             >
                 *
             </Box>

@@ -13,7 +13,6 @@ interface JobQuery {
     editedBy: string;
 }
 
-// Props expected by ListItems component
 interface ListItemsProps {
     ListItems: JobQuery[]; // List of Items to be shown in the list
     handleRadioChange: Function; // Callback to handle radio button selection
@@ -28,53 +27,44 @@ const JobListItems = (props: ListItemsProps) => {
     return (
         <Box
             position='relative'
-            marginTop="4px"
-            height="476px"
+            marginTop="0.25rem"
             overflow="auto"
-            border={`1px solid ${lightGray}`}
-            borderRadius="4px"
-            boxShadow={`0px 3px 4px 2px ${transluscentBlack}`}
+            maxHeight="29.5rem"
+            border={`0.0625rem solid ${lightGray}`}
+            borderRadius="0.25rem"
+            boxShadow={`0rem 0.1875rem 0.25rem 0.125rem ${transluscentBlack}`}
             bgcolor="white"
             width="100%"
             zIndex={1000}
         >
-            <List style={{ padding: "0px" }}>
-                {/* If no results match the search query */}
-                {ListItems.length === 0 && (
-                    <ListItem>
-                        <Typography fontFamily={"inherit"} justifyContent="center" variant="body2" color="text.secondary">
-                            No results found.
-                        </Typography>
-                    </ListItem>
-                )}
-
-                {/* Map and render each filtered query item */}
+            <List style={{ padding: "0rem" }}>
+                {/* Render each filtered Job item */}
                 {ListItems.map((query, index: number) => (
                     <Box key={query.id}>
                         <ListItem
                             sx={{
-                                px: "16px",
-                                py: "3px",
+                                px: "1rem",
+                                py: "0.1875rem",
                                 cursor: 'pointer'
                             }}
                             onClick={() => handleRadioChange(query.id, query.title)}
                         >
                             {/* Radio button to indicate selected query */}
-                            <Box marginBottom="26px">
+                            <Box marginBottom="1.625rem">
                                 <Radio
                                     checked={selectedItem === query.id}
                                     onChange={() => handleRadioChange(query.id, query.title)}
                                     size="small"
                                 />
                             </Box>
-                            <Box width="100%" marginLeft="8px" >
+                            <Box width="100%" marginLeft="0.5rem" >
                                 <Typography
                                     variant="caption"
                                     color={darkGray}
                                     fontWeight="500"
                                     fontFamily="inherit"
                                 >
-                                    {query.company} <Dots /> {query.location} <Dots /> {query.openings} Openings
+                                    {query.company} <Dots dotsColor="grey.400" /> {query.location} <Dots dotsColor="grey.400" /> {query.openings} Openings
                                 </Typography>
                                 <Typography
                                     variant="body2"
@@ -87,17 +77,17 @@ const JobListItems = (props: ListItemsProps) => {
                                     variant="caption"
                                     color={mediumGray}
                                     display="block"
-                                    paddingTop="4px"
-                                    paddingBottom="4px"
+                                    paddingTop="0.25rem"
+                                    paddingBottom="0.25rem"
                                     fontWeight="400"
                                     fontFamily="inherit"
                                 >
-                                    Edited On: {query.editDate} <Dots /> Edited By: {query.editedBy}
+                                    Edited On: {query.editDate} <Dots dotsColor="grey.400" /> Edited By: {query.editedBy}
                                 </Typography>
                             </Box>
                         </ListItem>
 
-                        {/* Divider between list items, except after last item */}
+                        {/* Not to show divider after last list item because there is nothing after that */}
                         {index !== ListItems.length - 1 && <Divider />}
                     </Box>
                 ))}

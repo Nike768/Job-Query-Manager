@@ -22,7 +22,7 @@ const TextInput = (props: {
             id="job-query"
             fullWidth
             variant="outlined"
-            label={<LabelWithAsterisk labelText={labelText} />}
+            label={<LabelWithAsterisk labelText={labelText} asteriskColor="red" />}
             value={searchQuery}
             onChange={(e) => handleInputChange(e)}
             onClick={() => setIsDropdownOpen(true)}
