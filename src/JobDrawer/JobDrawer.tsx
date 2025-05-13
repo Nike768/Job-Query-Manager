@@ -76,7 +76,7 @@ const JobDrawer = (props: MoveToJobQueryDialogProps) => {
     return jobQueries;
   }, [searchQuery]);
 
-  const endAdornment = useMemo(() => (
+  const inputEndIcon = useMemo(() => (
     <IconButton
       size="small"
       onClick={(e) => {
@@ -124,7 +124,7 @@ const JobDrawer = (props: MoveToJobQueryDialogProps) => {
                 setIsDropdownOpen={setIsDropdownOpen}
                 labelText="Job Query Title"
                 handleInputChange={handleInputChange}
-                inputProps={{endAdornment : endAdornment}}
+                inputProps={{endAdornment : inputEndIcon}}
               />
               {isDropdownOpen && (
                 filteredQueries.length === 0 ? (
