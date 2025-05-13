@@ -76,6 +76,7 @@ const JobDrawer = (props: MoveToJobQueryDialogProps) => {
     return jobQueries;
   }, [searchQuery]);
 
+  // Memoized the Input end icon to toggle the dropdown
   const inputEndIcon = useMemo(() => (
     <IconButton
       size="small"
